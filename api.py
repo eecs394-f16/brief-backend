@@ -14,20 +14,20 @@ def weather():
 
 @app.route("/news")
 def news():
-    d = feedparser.parse('http://dailynorthwestern.com/feed/')
+    d = feedparser.parse('https://dailynorthwestern.com/feed/rss/')
     entries = []
     count = 0
     for entry in d.entries:
-        entries.append({
-            "title":entry.title,
-            "link":entry.link,
-            "description":entry.description,
-            "published":entry.published
-        })
+    	e = {}
+    	e["title"] = entry.title
+    	e["link"] = entry.link
+    	e["description"] = entry.description
+    	e["published"] = entry.published
+        entries.append(e)
         if count == 5:
             break
         count += 1
-    return jsonify(entries)
+    return jsonify({"entries":entries})
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
