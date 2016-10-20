@@ -9,13 +9,19 @@ from flask_cors import CORS, cross_origin
 app = Flask(__name__)
 CORS(app)
 
+def to_f(k):
+    return int(float(k) * float(9)/5 - 459.67)
+
 @cross_origin()
 @app.route("/weather")
 def weather():
     r = requests.get("http://api.openweathermap.org/data/2.5/weather", params={"q":"Evanston","APPID":"2632210dcc93cc19c2ee8b5fb2b59af9"})
     result = r.json()
-
-    return jsonify({"main":result["main"],"weather":result["weather"]})
+    weather = {"main":result["main"],"weather":result["weather"]}
+    weather["main"]["temp"] = to_f(weather["main"]["temp"])
+    weather["main"]["temp_max"] = to_f(weather["main"]["temp_max"])
+    weather["main"]["temp_min"] = to_f(weather["main"]["temp_min"])
+    return jsonify(weather)
 
 @cross_origin()
 @app.route("/news")
