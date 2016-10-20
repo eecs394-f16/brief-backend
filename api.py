@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__)
 
+@crossdomain(origin='*')
 @app.route("/weather")
 def weather():
     r = requests.get("http://api.openweathermap.org/data/2.5/weather", params={"q":"Evanston","APPID":"2632210dcc93cc19c2ee8b5fb2b59af9"})
@@ -14,6 +15,7 @@ def weather():
 
     return jsonify({"main":result["main"],"weather":result["weather"]})
 
+@crossdomain(origin='*')
 @app.route("/news")
 def news():
     d = feedparser.parse('https://dailynorthwestern.com/feed/rss/')
@@ -31,6 +33,7 @@ def news():
         count += 1
     return jsonify({"entries":entries})
 
+@crossdomain(origin='*')
 @app.route("/events")
 def events():
     r = requests.get("http://planitpurple.northwestern.edu/#search=/2/1+3+2+9+11+5+10+6+4+8+7/1+3+4+5/")
