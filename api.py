@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import jsonify
+from flask import crossdomain
 from bs4 import BeautifulSoup
 import requests
 import feedparser
